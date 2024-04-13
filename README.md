@@ -22,11 +22,11 @@ entity: sensor.pm2_5_sensor
 name: Living Room PM2.5 (µg/m3)
 segments:
   - until: 12
-    color: '#43a047'
+    color: '#43A047'
   - until: 35
     color: '#FFC730'
   - until: 55
     color: '#FF8000'
   - until: 100
-    color: '#db4437'
+    color: '#DB4437'
 ```
