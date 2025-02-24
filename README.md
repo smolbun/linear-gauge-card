@@ -7,12 +7,16 @@
 | -------------- | ----------- | ------------ | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `type` | string | **Required** | `custom:linear-gauge-card` |
 | `entity` | string | **Required** | `sensor.pm2_5_sensor` |
-| `segments` | string | **Required** | Specify the color and how long each data segments will be |
 | `name` | string | **Optional** | The title of the card | Device Friendly Name |
 | `unit` | string | **Optional** | Display unit alongside the data |
 | `fontSize` | string | **Optional** | Font size of the data label and marker | 15px
 | `barWidth` | string | **Optional** | Width of the pointer bar | 1%
 | `dataLabelColor` | string | **Optional** | Adjust color and/or transparency of the data label | rgba(145, 145, 145, 0.4)
+| `dataLabelTextColor` | string | **Optional** | Adjust color of the data label text | white
+| `gridLabelTextColor` | string | **Optional** | Adjust color of the grid label text | white
+| `segments` | string | **Required** | Specify the color and how long each data segments will be |
+| `until` | integer | **Required** | The length of the segment |
+| `start` | integer | **Optional** | The starting value of the segment |
 
 
 **Example**
@@ -29,4 +33,18 @@ segments:
     color: '#FF8000'
   - until: 100
     color: '#DB4437'
+```
+```yaml
+type: custom:linear-gauge-card
+entity: sensor.aq_sensor_co2
+name: SCD40 C02
+fontSize: 15px
+segments:
+  - until: 1000
+    start: 400
+    color: "#43A047"
+  - until: 1400
+    color: "#FFC730"
+  - until: 2000
+    color: "#DB4437"
 ```

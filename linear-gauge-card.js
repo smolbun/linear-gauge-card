@@ -12,6 +12,8 @@ class LinearGaugeCard extends HTMLElement {
     if (!this.config.unit) this.config.unit = "";
     if (!this.config.dataLabelColor)
       this.config.dataLabelColor = "rgba(145, 145, 145, 0.4)";
+    if (!this.config.dataLabelTextColor) this.config.dataLabelTextColor = "white";
+    if (!this.config.gridLabelTextColor) this.config.gridLabelTextColor = "white";
 
     // Initialize the content if it's not there yet.
     if (!this.content) {
@@ -46,11 +48,12 @@ class LinearGaugeCard extends HTMLElement {
         }
 
         .grid-label {
-            text-align: right;
-            color: white;
+            display: flex;
+            justify-content: space-between;
         }
 
         .grid-label-text {
+          color: ${this.config.gridLabelTextColor};
           display: inline-block;
           font-size: ${this.config.fontSize};
           padding-top: 5px;
@@ -75,7 +78,7 @@ class LinearGaugeCard extends HTMLElement {
           padding: 2px 4px;
           border-radius: 5px;
           font-weight: bold;
-          color: white;
+          color: ${this.config.dataLabelTextColor};
           white-space: nowrap;
         }
         
@@ -101,6 +104,7 @@ class LinearGaugeCard extends HTMLElement {
       let newGridItem = document.createElement("div");
       let newGridLabel = document.createElement("div");
       let newText = document.createElement("span");
+      let newTextStart = document.createElement("span");
 
       // First segment
       if (i === 0) {
@@ -114,9 +118,8 @@ class LinearGaugeCard extends HTMLElement {
         griditemsizes += "auto";
       } else {
         newGridItem.style.borderRadius = "0px 0px 0px 0px";
-        griditemsizes += `${
-          ((segment.until - prevsegment.until) / max) * 100
-        }% `;
+        griditemsizes += `${((segment.until - prevsegment.until) / max) * 100
+          }% `;
       }
 
       newGridItem.className = "grid-item";
@@ -127,8 +130,14 @@ class LinearGaugeCard extends HTMLElement {
       newText.id = "grid-label-text-" + i;
       newText.textContent = segment.until;
 
+      newTextStart.className = "grid-label-text";
+      newTextStart.id = "grid-label-text-start-" + i;
+
+      newTextStart.textContent = segment.start ? segment.start : "";
+
       gridContainer.appendChild(newGridItem);
       gridLabelContainer.appendChild(newGridLabel);
+      newGridLabel.appendChild(newTextStart);
       newGridLabel.appendChild(newText);
     }
 
@@ -157,12 +166,11 @@ class LinearGaugeCard extends HTMLElement {
       Number(stateStr) <
       Number(this.config.segments[this.config.segments.length - 1].until)
     ) {
-      bar.style.left = `${
-        (stateStr /
-          this.config.segments[this.config.segments.length - 1].until) *
-          100 -
+      bar.style.left = `${(stateStr /
+        this.config.segments[this.config.segments.length - 1].until) *
+        100 -
         barWidth / 2
-      }%`;
+        }%`;
       bar.style.borderRadius = "0px 0px 0px 0px";
     } else if (Number(stateStr) <= this.config.segments[0].until) {
       bar.style.left = `${0}%`;
@@ -172,7 +180,7 @@ class LinearGaugeCard extends HTMLElement {
       bar.style.borderRadius = "0px 5px 5px 0px";
     }
 
-    dataLabel.textContent = `${stateStr} ${this.config.unit}`;
+    dataLabel.textContent = `${stateStr}${this.config.unit ? ' ' + this.config.unit : ''}`;
   }
 
   getCardSize() {
