@@ -14,6 +14,7 @@ class LinearGaugeCard extends HTMLElement {
       this.config.dataLabelColor = "rgba(145, 145, 145, 0.4)";
     if (!this.config.dataLabelTextColor) this.config.dataLabelTextColor = "white";
     if (!this.config.gridLabelTextColor) this.config.gridLabelTextColor = "white";
+    if (!this.config.start) this.config.start = 0;
 
     // Initialize the content if it's not there yet.
     if (!this.content) {
@@ -95,7 +96,8 @@ class LinearGaugeCard extends HTMLElement {
     let gridContainer = this.querySelector(".grid-container");
     let gridLabelContainer = this.querySelector(".grid-label-container");
 
-    const max = this.config.segments[this.config.segments.length - 1].until;
+    const max = this.config.segments[this.config.segments.length - 1].until + this.config.start;
+
     let griditemsizes = "";
     for (let i = 0; i < this.config.segments.length; i++) {
       const segment = this.config.segments[i];

@@ -14,9 +14,9 @@
 | `dataLabelColor` | string | **Optional** | Adjust color and/or transparency of the data label | rgba(145, 145, 145, 0.4)
 | `dataLabelTextColor` | string | **Optional** | Adjust color of the data label text | white
 | `gridLabelTextColor` | string | **Optional** | Adjust color of the grid label text | white
+| `start` | integer | **Optional** | The starting value of the segment |
 | `segments` | string | **Required** | Specify the color and how long each data segments will be |
 | `until` | integer | **Required** | The length of the segment |
-| `start` | integer | **Optional** | The starting value of the segment |
 
 
 **Example**
