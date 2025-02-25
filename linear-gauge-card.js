@@ -15,6 +15,7 @@ class LinearGaugeCard extends HTMLElement {
     if (!this.config.dataLabelTextColor) this.config.dataLabelTextColor = "white";
     if (!this.config.gridLabelTextColor) this.config.gridLabelTextColor = "white";
     if (!this.config.start) this.config.start = 0;
+    if (!this.config.startVisibility) this.config.startVisibility = "hidden";
 
     // Initialize the content if it's not there yet.
     if (!this.content) {
@@ -82,6 +83,10 @@ class LinearGaugeCard extends HTMLElement {
           color: ${this.config.dataLabelTextColor};
           white-space: nowrap;
         }
+
+        #grid-label-text-start {
+          visibility: ${this.config.startVisibility};
+        }
         
         
     </style>
@@ -110,6 +115,7 @@ class LinearGaugeCard extends HTMLElement {
 
       // First segment
       if (i === 0) {
+        newTextStart.textContent = this.config.start;
         newGridItem.style.borderRadius = "5px 0px 0px 5px";
         griditemsizes += `${(segment.until / max) * 100}% `;
       }
@@ -133,9 +139,7 @@ class LinearGaugeCard extends HTMLElement {
       newText.textContent = segment.until;
 
       newTextStart.className = "grid-label-text";
-      newTextStart.id = "grid-label-text-start-" + i;
-
-      newTextStart.textContent = segment.start ? segment.start : "";
+      newTextStart.id = "grid-label-text-start";
 
       gridContainer.appendChild(newGridItem);
       gridLabelContainer.appendChild(newGridLabel);

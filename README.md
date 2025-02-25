@@ -15,6 +15,7 @@
 | `dataLabelTextColor` | string | **Optional** | Adjust color of the data label text | white
 | `gridLabelTextColor` | string | **Optional** | Adjust color of the grid label text | white
 | `start` | integer | **Optional** | The starting value of the segment |
+| `startVisibility` | string | **Optional** | Visability of the starting value | hidden
 | `segments` | string | **Required** | Specify the color and how long each data segments will be |
 | `until` | integer | **Required** | The length of the segment |
 
@@ -39,9 +40,10 @@ type: custom:linear-gauge-card
 entity: sensor.aq_sensor_co2
 name: SCD40 C02
 fontSize: 15px
+start: 400
+startVisability: visible
 segments:
   - until: 1000
-    start: 400
     color: "#43A047"
   - until: 1400
     color: "#FFC730"
