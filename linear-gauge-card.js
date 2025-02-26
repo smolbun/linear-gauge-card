@@ -101,7 +101,7 @@ class LinearGaugeCard extends HTMLElement {
     let gridContainer = this.querySelector(".grid-container");
     let gridLabelContainer = this.querySelector(".grid-label-container");
 
-    const max = this.config.segments[this.config.segments.length - 1].until + this.config.start;
+    const max = this.config.segments[this.config.segments.length - 1].until - this.config.start;
 
     let griditemsizes = "";
     for (let i = 0; i < this.config.segments.length; i++) {
@@ -117,7 +117,7 @@ class LinearGaugeCard extends HTMLElement {
       if (i === 0) {
         newTextStart.textContent = this.config.start;
         newGridItem.style.borderRadius = "5px 0px 0px 5px";
-        griditemsizes += `${(segment.until / max) * 100}% `;
+        griditemsizes += `${((segment.until - this.config.start) / max) * 100}% `;
       }
 
       // Last segment
@@ -168,22 +168,17 @@ class LinearGaugeCard extends HTMLElement {
 
     cardHeader.textContent = this.config.name ? this.config.name : friendlyName;
 
-    if (
-      Number(stateStr) <
-      Number(this.config.segments[this.config.segments.length - 1].until)
-    ) {
-      bar.style.left = `${(stateStr /
-        this.config.segments[this.config.segments.length - 1].until) *
-        100 -
-        barWidth / 2
-        }%`;
-      bar.style.borderRadius = "0px 0px 0px 0px";
-    } else if (Number(stateStr) <= this.config.segments[0].until) {
-      bar.style.left = `${0}%`;
+    if (stateStr <= this.config.start) {
+      bar.style.left = `${0}% `;
       bar.style.borderRadius = "5px 0px 0px 5px";
-    } else {
-      bar.style.left = `${100}%`;
+    } else if (stateStr >= this.config.segments[this.config.segments.length - 1].until) {
+      bar.style.left = `${100}% `;
       bar.style.borderRadius = "0px 5px 5px 0px";
+    } else {
+      bar.style.left = `${(stateStr - this.config.start) /
+        (this.config.segments[this.config.segments.length - 1].until - 
+        this.config.start) * 100 - (barWidth / 2)}% `;
+      bar.style.borderRadius = "0px 0px 0px 0px";
     }
 
     dataLabel.textContent = `${stateStr}${this.config.unit ? ' ' + this.config.unit : ''}`;
