@@ -10,7 +10,7 @@
 | `name` | string | **Optional** | The title of the card | Device Friendly Name |
 | `unit` | string | **Optional** | Display unit alongside the data |
 | `fontSize` | string | **Optional** | Font size of the data label and marker | 15px
-| `decimal` | integer | **Optional** | Specify how precise should the value be
+| `decimal` | integer | **Optional** | Specify how precise should the value be | 0
 | `barWidth` | string | **Optional** | Width of the pointer bar | 1%
 | `dataLabelColor` | string | **Optional** | Adjust color and/or transparency of the data label | rgba(145, 145, 145, 0.4)
 | `dataLabelTextColor` | string | **Optional** | Adjust color of the data label text | white
