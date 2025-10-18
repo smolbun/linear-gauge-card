@@ -16,6 +16,7 @@ class LinearGaugeCard extends HTMLElement {
     if (!this.config.gridLabelTextColor) this.config.gridLabelTextColor = "white";
     if (!this.config.start) this.config.start = 0;
     if (!this.config.startVisibility) this.config.startVisibility = "hidden";
+    if (this.config.decimal === undefined) this.config.decimal = 0;
 
     // Initialize the content if it's not there yet.
     if (!this.content) {
@@ -181,7 +182,13 @@ class LinearGaugeCard extends HTMLElement {
       bar.style.borderRadius = "0px 0px 0px 0px";
     }
 
-    dataLabel.textContent = `${stateStr}${this.config.unit ? ' ' + this.config.unit : ''}`;
+    // Format the value with the specified number of decimal places
+    let formattedValue = stateStr;
+    if (stateStr !== "NaN") {
+      formattedValue = parseFloat(stateStr).toFixed(this.config.decimal);
+    }
+
+    dataLabel.textContent = `${formattedValue}${this.config.unit ? ' ' + this.config.unit : ''}`;
   }
 
   getCardSize() {
